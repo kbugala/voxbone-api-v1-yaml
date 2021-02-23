@@ -112,7 +112,7 @@ info:
     |`PERSON_IS_A_MINOR`|`525`|The entity must be 18 years old in order to sign a document.|
     
     ### Address Rejection Reasons
-    After a created address is submitted for verification, our customer care team perform checks to verify the relationship between the address/id information and proof documents if any. A rejection reason means a change in the address information or the proof documents is necessary to proceed with service activation. If you have any disputes or confusion about what to do next, feel free to contact our [Customer Care via email](mailto:regulations@voxbone.com).
+    After a created address is submitted for verification, our customer success team perform checks to verify the relationship between the address/id information and proof documents if any. A rejection reason means a change in the address information or the proof documents is necessary to proceed with service activation. If you have any disputes or confusion about what to do next, feel free to contact our [Customer Success Team via email](mailto:compliance@bandwidth.com).
     
     In December 2020 we made some changes to end user documentation validation, resulting in our rejection reasons changing slightly in order to provide you with more clarity. The full list is available below but if you would like to view the old values [click here](https://support.voxbone.com/hc/en-us/articles/360016200597).
     
@@ -124,7 +124,7 @@ info:
     | `INVALID_DOC_MISSING` | Document not accepted - Please submit full scan/copy of entire proof.|
     | `INVALID_DOC_WHOLE` | Document not accepted - Please submit front and back of ID.|
     | `INVALID_DOCTYPE_INVOICES` | Document type not accepted - Invoices not accepted.|
-    | `INVALID_DOCYPE_GOVERNMENT_DOCS` | Document type not accepted - Government issued document required.|
+    | `INVALID_DOCTYPE_GOVERNMENT_DOCS` | Document type not accepted - Government issued document required.|
     | `INVALID_DOCTYPE_VIRTUAL_ADDRESS` | Document type not accepted - Virtual Office address proofs not accepted.|
     | `INVALID_DOCTYPE_ATTESTATIONS` | Document type not accepted - Attestations not accepted.|
     | `INVALID_DOCTYPE_THIRD_PARTY` | Document type not accepted - Document must be issued by a third party.|
@@ -140,7 +140,7 @@ info:
     | `INCOMPLETE_INFO_BUSINESS_REG` | Incomplete Information - Business registration also required.|
     | `INCOMPLETE_INFO_LEGAL_REP` | Incomplete Information - Document linking legal representative also required.|
     | `INCOMPLETE_INFO_LEGAL_REP_ID` | Incomplete Information - Valid ID of legal representative also required.|
-    | `INCOMPLETE_INFO_LEAGL_ZIP` | Incomplete Information - ZIP file with both valid ID of legal representative and business registration required.|
+    | `INCOMPLETE_INFO_LEGAL_ZIP` | Incomplete Information - ZIP file with both valid ID of legal representative and business registration required.|
     | `INCOMPLETE_INFO_PO_BOX` | Incomplete Information - PO Boxes not accepted.|
     | `INCOMPLETE_INFO_REP_PICTURE` | Incomplete Information - Picture of representative holding ID also required.|
     | `INCOMPLETE_INFO_CHINESE_RECEIPT` | Incomplete Information - Chinese mobile store confirmation receipt also required.|
@@ -159,8 +159,8 @@ info:
     | `INFO_MISMATCH_BIRTH_PLACE` | Information mismatch - Birth place not valid.|
     | `INFO_MISMATCH_BIRTH_DATE` | Information mismatch - Birth date not valid.|
     | `INFO_MISMATCH_ID` | Information mismatch - ID information not valid.|
-    | `OTHER_ABUSE` | Other (please contact abuse.telecom@voxbone.com).|
-    | `OTHER_REGULATIONS` | Other (please contact regulations@voxbone.com).|
+    | `OTHER_ABUSE` | Other (please contact abuse_voxbone@bandwidth.com).|
+    | `OTHER_REGULATIONS` | Other (please contact compliance@bandwidth.com).|
     
     ### Number Configuration Error Codes
     When a request to apply a list of configurations to numbers, the request might be rejected due to some errors in the request or related to the account status.
@@ -2426,7 +2426,7 @@ paths:
             "$ref": "#/definitions/DeleteFaxUriResponse"
   "/configuration/didConfiguration":
     x-summary: Single Number Configuration
-    x-description: Configure a single DID with certain settings including activation of services like VoxOut International, VoxOut National, WebRTC, Emergency Service and more. To remove a configuration such as unlinking a Voice URI or an SMS Link from a number, set the property to `null` in your request. Only the configuration parameters present in your reqeust will be taken into account, the remaining configuration remains unchanged.
+    x-description: Configure a single DID with certain settings including activation of services like VoxOut International, VoxOut National and more. To remove a configuration such as unlinking a Voice URI or an SMS Link from a number, set the property to `null` in your request. Only the configuration parameters present in your reqeust will be taken into account, the remaining configuration remains unchanged.
     post:
       tags:
       - Number Configuration
@@ -2679,44 +2679,6 @@ paths:
                     }
                 ]
               }
-  "/configuration/configuration":
-    x-summary: Apply configurations (deprecated)
-    x-description: | 
-      *Note: This endpoint is no longer maintained or improved with new features on our platform and will be deprecated as of January 16th, 2020.*
-      
-      *Please use `/configuration/didConfiguration` or `/configuration/bulk` instead.*
-      
-      Configure one or multiple DIDs with certain settings. Please note that if you get an error message for one DID, then you should consider that none of the DIDs in your request will get the requested configuration and you should resubmit the request with the necessary changes. 
-    post:
-      tags:
-      - Number Configuration
-      summary: Apply set of configurations to one or many DIDs
-      consumes:
-      - application/json
-      - text/xml
-      produces:
-      - text/xml
-      - application/json
-      parameters:
-      - in: body
-        name: body
-        required: true
-        schema:
-          "$ref": "#/definitions/DidConfigurationRequest"
-          example: |
-            {
-              "didId":12345,
-              "voiceUriId":1234,
-              "capacityGroupId":123456,
-              "trunkId":1345,
-              "deliveryId":1,
-              "ringback":"STANDARD"
-            }
-      responses:
-        '200':
-          description: successful operation
-          schema:
-            "$ref": "#/definitions/DidConfigurationResponse"
   "/inventory/trunk":
     x-summary: List Available Trunks
     x-description: This method allows you to get the list of the trunks that are available
@@ -5073,7 +5035,7 @@ definitions:
           - INVALID_DOC_MISSING
           - INVALID_DOC_WHOLE
           - INVALID_DOCTYPE_INVOICES
-          - INVALID_DOCYPE_GOVERNMENT_DOCS
+          - INVALID_DOCTYPE_GOVERNMENT_DOCS
           - INVALID_DOCTYPE_VIRTUAL_ADDRESS
           - INVALID_DOCTYPE_ATTESTATIONS
           - INVALID_DOCTYPE_THIRD_PARTY
@@ -5089,7 +5051,7 @@ definitions:
           - INCOMPLETE_INFO_BUSINESS_REG
           - INCOMPLETE_INFO_LEGAL_REP
           - INCOMPLETE_INFO_LEGAL_REP_ID
-          - INCOMPLETE_INFO_LEAGL_ZIP
+          - INCOMPLETE_INFO_LEGAL_ZIP
           - INCOMPLETE_INFO_PO_BOX
           - INCOMPLETE_INFO_REP_PICTURE
           - INCOMPLETE_INFO_CHINESE_RECEIPT
