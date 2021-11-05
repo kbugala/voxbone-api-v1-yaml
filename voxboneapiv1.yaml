@@ -123,6 +123,15 @@ info:
     | `INVALID_DOC_ILLEGIBLE` | Document not accepted - Document illegible/blank (details unclear to read/blank document).|
     | `INVALID_DOC_MISSING` | Document not accepted - Please submit full scan/copy of entire proof.|
     | `INVALID_DOC_WHOLE` | Document not accepted - Please submit front and back of ID.|
+    | `INVALID_DOC_BUSINESS_REGISTRATION` | Document not accepted - Expired Business Registration |
+    | `INVALID_DOC_OFFICE_RENTAL` | Document not valid - Office Rental/Lease agreements not accepted |
+    | `INVALID_DOC_NOT_SIGNED` | Document not valid - Certificate of Authority not signed/stamped |
+    | `INVALID_DOC_NO_REGULAR_USAGE` | Document not valid - Address proof document doesn’t show regular usage |
+    | `INVALID_DOC_GEWA` | Document not valid - Please insert a GewA form signed and stamped by issuing authority |
+    | `INVALID_DOC_COMMERCIAL_EXTRACT` | Document not valid - Please add a Commercial extract/ Handelsregisterauszug |
+    | `INVALID_DOC_TRADE_LICENSE` | Document not valid - Please add a Trade License/ Gewerbeanzeige |
+    | `INVALID_DOC_LOCAL_AUTH` | Document not valid - Please add other official documents supplied by the local authority (e.g. Finanzamt) |
+    | `INVALID_DOC_NOTARY` | Document not valid - We don’t accept Urkundenrolle/notary’s document register as proof |
     | `INVALID_DOCTYPE_INVOICES` | Document type not accepted - Invoices not accepted.|
     | `INVALID_DOCTYPE_GOVERNMENT_DOCS` | Document type not accepted - Government issued document required.|
     | `INVALID_DOCTYPE_VIRTUAL_ADDRESS` | Document type not accepted - Virtual Office address proofs not accepted.|
@@ -134,6 +143,8 @@ info:
     | `INVALID_DOCTYPE_ID_TYPE` | Document type not accepted - ID type not accepted.|
     | `INVALID_DOCTYPE_ID_TYPE_ADDRESS` | Document type not accepted - Proof of address type not accepted.|
     | `INVALID_DOCTYPE_PASSPORT` | Document type not accepted - Passport required.|
+    | `INVALID_DOCTYPE_CORPORATE_ID` | Document type not accepted - Cannot accept corporate ID as document linking business representative to company |
+    | `INCOMPLETE_ADDRESS_BUILDING_NAME_NUMBER` | Incomplete address details - Please enter the full address including Building Name and Number |
     | `INCOMPLETE_INFO_DATE` | Incomplete Information - Date missing.|
     | `INCOMPLETE_INFO_ADDRESS` | Incomplete Information - Document does not provide address information.|
     | `INCOMPLETE_INFO_PROOFS` | Incomplete Information - Both proof of address and proof of ID required.|
@@ -144,6 +155,15 @@ info:
     | `INCOMPLETE_INFO_PO_BOX` | Incomplete Information - PO Boxes not accepted.|
     | `INCOMPLETE_INFO_REP_PICTURE` | Incomplete Information - Picture of representative holding ID also required.|
     | `INCOMPLETE_INFO_CHINESE_RECEIPT` | Incomplete Information - Chinese mobile store confirmation receipt also required.|
+    | `INCOMPLETE_INFO_EXPIRED_ID` | Incomplete Information - ID has expired |
+    | `INCOMPLETE_INFO_ID_HOLDER` | Incomplete Information - If ID holder not listed on proof, please add a document that links ID holder to company as well |
+    | `INCOMPLETE_INFO_ID` | Incomplete Information - ID is missing, please reattach |
+    | `INCOMPLETE_INFO_TAX_CERT` | Incomplete Information - Tax certificate also required |
+    | `INCOMPLETE_INFO_UTILITY_BILLS` | Incomplete Information - Utility bills within 6 months also required |
+    | `EXPIRED_DOC_NOT_WITHIN_6_MONTHS` | Document expired - Please insert Business Registration issued within 6 months |
+    | `EXPIRED_DOC_NOT_WITHIN_1_YEAR` | Document expired - Please insert Business Registration issued within 1 year |
+    | `EXPIRED_DOC_KIBS_NOT_WITHIN_3_MONTHS` | Document expired - Please insert Kbis form within 3 months |
+    | `EXPIRED_GOV_DOC_NOT_WITHIN_1_YEAR` | Document expired - Please insert government-issued document within the last year |
     | `INFO_MISMATCH_ADDRESS_PROOF` | Information mismatch - Information on address proof differs from portal information.|
     | `INFO_MISMATCH_ID_PROOF` | Information mismatch - Information on ID proof differs from portal information.|
     | `INFO_MISMATCH_DETAILS` | Information mismatch - Address information differs (company name/end user name).|
@@ -159,6 +179,14 @@ info:
     | `INFO_MISMATCH_BIRTH_PLACE` | Information mismatch - Birth place not valid.|
     | `INFO_MISMATCH_BIRTH_DATE` | Information mismatch - Birth date not valid.|
     | `INFO_MISMATCH_ID` | Information mismatch - ID information not valid.|
+    | `INFO_MISMATCH_PORTAL_ENTRY` | Information Mismatch - Please amend the entry on the portal based on rejection reason |
+    | `INFO_MISMATCH_PRIVATE_ADDRESS_ON_PORTAL` | Information Mismatch - Address on our portal is private address of ID holder, please amend |
+    | `INFO_MISMATCH_FORMER_ADDRESS` | Information Mismatch - Address on proof is the former address; the company since moved |
+    | `INFO_MISMATCH_INCORRECT_ADDRESS` | Information Mismatch - Incorrect address, please amend |
+    | `INFO_MISMATCH_FLAT_NUMBER` | Information Mismatch - Flat/floor no. also required |
+    | `INFO_MISMATCH_BUILDING_NAME` | Information Mismatch - Building Name also required |
+    | `INFO_MISMATCH_ZIP_CODE` | Information Mismatch - Incorrect ZIP/Post code |
+    | `MISSING_DOC_TAX_REGISTRATION` | Document missing - Please insert tax registration |
     | `OTHER_ABUSE` | Other (please contact abuse_voxbone@bandwidth.com).|
     | `OTHER_REGULATIONS` | Other (please contact compliance@bandwidth.com).|
     
@@ -287,33 +315,33 @@ tags:
     7. Use the listOrder method to retrieve your orders and their status (carts can lead to 1 or multiple order(s)). When running the checkoutCart operation, the response contains a list of productCheckout elements. These elements give you an orderReference for each product type contained in your cart, which can be used as a filter for the listDid operation
 - name: Service Activation
   description: |
-    Service activation module contains list of operations that allows you to manage regulatory information on numbers and services for activation. Every country has specific restrictions and activation requirements for different services. A number from a country which has regulation requirements will not be activated for voice services unless a set of validated address and end user details are associated with it.
-    
+    Service activation module contains a list of operations that allow you to manage regulatory information on numbers and services for activation. Every country has specific restrictions and activation requirements for different services. A number from a country which has regulation requirements will not be activated for voice services unless a set of validated address and end user details are associated with it.
+
     The main activation information that's needed are addresses and end user information, which we call "Local Address Requirements" or in short, LAR. 
     
-    LAR needs for a specific country and area code can be retrieved via [`/inventory/didGroup`](https://docs.voxbone.com/#/reference/service-&-coverage/get-stock-pricing-activation-requirements-available-features-and-other-details-on-numbers/search-voxbone-coverage-by-city-and-area-code) with associated filter parameters for a country and area code. In the response, you can see what type of an address is required and if proof document needs to be attached. 
+    LAR needs for a specific country and area code can be retrieved via [`/inventory/didGroup`](https://developers.voxbone.com/#/reference/service-&-coverage/get-stock-pricing-activation-requirements-available-features-and-other-details-on-numbers/search-voxbone-coverage-by-city-and-area-code) with associated filter parameters for a country and area code. In the response, you can see what type of an address is required and if proof document needs to be attached. 
     
-    Keep in mind that there can be more specific requirements for the country you're trying to activate voice services from. For more details, refer to our country-specific regulatory requirements.
-    
-    If a proof of address is required, not only the address must be linked but a proof of address must be provided and verified by Voxbone. Therefore there are two different important notions when managing your regulation addresses:
-    
+    Keep in mind that there can be more specific requirements for the country you're trying to activate voice services from. Please review our __[Guide to using our LAR API](https://support.voxbone.com/hc/en-us/articles/4402904174097)__ which provides detailed country-specific regulatory requirements
+
+    Depending on the country and number type, a proof of address and/or proof of identity may be required. If this is the case, an address must be linked with one or both of these documents which will be verified by Voxbone.
+
       - __Valid address__: this is an address that contains all the data requested by the local regulator. Our systems can automatically check the validity of an address:
-          - Extra mandatory information can be required in certain countries or for certain number types
+          - Additional mandatory information can be required in certain countries or for certain number types. Please refer to our __[Guide to using our LAR API](https://support.voxbone.com/hc/en-us/articles/4402904174097)__ for more information.
           - A check is sometimes done on the zip code to verify that the number is in the same local area as the number
           
       - __Verified address__: this is an address which requires a proof of address and for which a Voxbone employee will manually check that the documents that have been submitted are the expected ones (e.g. correct type of document, correct address, etc.). The verification process can take up to 2 working days. Accepted documents are usually:
           - A recurring utility bill with Company/Customer name and address which is not older than 6 months
-          - A government or state provided ID like passport, driver’s license or a letter from government verifying the customer’s address.
+          - A government or state provided ID like passport, driver’s license or a letter from the government verifying the customer’s address.
           
     In the most complex cases (e.g. Germany), your geographic DIDs will have to be linked to a valid and verified address and the address will have to be local to the DID’s area code. An example of a possible call flow to implement Local Address Requirements could be the following (based on geographic German DID:
           
-      - [`listDidGroup` with the `didGroupId` of the purchased number](https://docs.voxbone.com/#/reference/service-&-coverage/get-stock-pricing-activation-requirements-available-features-and-other-details-on-numbers/search-voxbone-coverage-by-city-and-area-code) will show `proofRequired` = `true` and `addressType` = `LOCAL`
-      - [If you have an existing address, you may use `isAddressValid`](https://docs.voxbone.com/#/reference/service-activation/check-address-validity-for-activation/check-if-address-is-valid-to-activate-numbers) or directly try to [link it to the DID using `linkRegulationAddress`](https://docs.voxbone.com/#/reference/service-activation/link-numbers-to-a-local-address-requirement-document-for-activation/link-numbers-to-a-local-address-requirement), an error message will be returned indicating if there is any missing data.
-      - Because for Germany the `addressType` is `LOCAL`, you have to [use `listZipCodes` to make sure that a valid zip code is used for the number’s area code](https://docs.voxbone.com/#/reference/service-activation/list-accepted-postal-codes/list-accepted-postal-codes-for-address-creation-in-a-country) (otherwise the linkRegulationAddress will return an error even if the address is verified).
-      - If there is no existing address, use the [`createRegulationAddress`](https://docs.voxbone.com/#/reference/service-activation/create-addresses/). Note that depending on the country of the DID (`destinationCountryCodeA3`) and its type (`didType`), the required data will differ.
-      - Upload a proof of address. There are two different methods to upload a proof of address. You can upload a proof of address for an existing address using [`uploadProofOfAddress`](https://docs.voxbone.com/#/reference/service-activation/upload-proof-documents-for-an-address/upload-proof-document) (only if the address is in status `REJECTED` or `NOT VERIFIED`), or you can specify the `proofOfAddress` field in the [`createRegulationAddress`](https://docs.voxbone.com/#/reference/service-activation/create-addresses/). The method will return an error if you try to upload an address proof for an address that is either `VERIFIED` or `VERIFICATION_NOT_REQUIRED` status.
-      - You can use [`listRegulationAddress`](https://docs.voxbone.com/#/reference/service-activation/create-addresses/list-already-created-addresses) to check the status of your address, if the status is `VERIFIED` or `VERIFICATION_NOT_REQUIRED`, then [`linkRegulationAddress`](https://docs.voxbone.com/#/reference/service-activation/link-numbers-to-a-local-address-requirement-document-for-activation/link-numbers-to-a-local-address-requirement) can link the DID to the address and unblock the number.
-      - An address can be unlinked from a DID by using the same [`linkRegulationAddress`](https://docs.voxbone.com/#/reference/service-activation/link-numbers-to-a-local-address-requirement-document-for-activation/link-numbers-to-a-local-address-requirement) method, and an unlinked address can be deleted by using [`deleteRegulationAddress`](https://docs.voxbone.com/#/reference/service-activation/reuse-or-delete-addresses-lar-for-number-activation/remove-a-local-address-requirements-document).
+      - [`listDidGroup` with the `didGroupId`](https://developers.voxbone.com/#/reference/service-&-coverage/get-stock-pricing-activation-requirements-available-features-and-other-details-on-numbers/search-voxbone-coverage-by-city-and-area-code) of the purchased number will show `proofRequired` = `true` and `addressType` = `LOCAL`
+      - If you have an existing address, you may use [`isAddressValid`](https://developers.voxbone.com/#/reference/service-activation/check-address-validity-for-activation/check-if-address-is-valid-to-activate-numbers) or directly try to [link it to the DID using `linkRegulationAddress`](https://developers.voxbone.com/#/reference/service-activation/link-numbers-to-a-local-address-requirement-document-for-activation/link-numbers-to-a-local-address-requirement), an error message will be returned indicating if there is any missing data.
+      - Because for Germany the `addressType` is `LOCAL`, you have to use [`listZipCodes`](https://developers.voxbone.com/#/reference/service-activation/list-accepted-postal-codes/list-accepted-postal-codes-for-address-creation-in-a-country) to make sure that a valid zip code is used for the number’s area code. Otherwise the linkRegulationAddress will return an error even if the address is verified.
+      - If there is no existing address, use the [`createRegulationAddress`](https://developers.voxbone.com/#/reference/service-activation/create-addresses/). Note that depending on the country of the DID (`destinationCountryCodeA3`) and its type (`didType`), the required data will differ.
+      - Upload a proof of address. There are two different methods to upload a proof of address. You can upload a proof of address for an existing address using [`uploadProofOfAddress`](https://developers.voxbone.com/#/reference/service-activation/upload-proof-documents-for-an-address/upload-proof-document) (only if the address is in status `REJECTED` or `NOT VERIFIED`), or you can specify the `proofOfAddress` field in the [`createRegulationAddress`](https://developers.voxbone.com/#/reference/service-activation/create-addresses/). The method will return an error if you try to upload an address proof for an address that is either `VERIFIED` or `VERIFICATION_NOT_REQUIRED` status.
+      - You can use [`listRegulationAddress`](https://developers.voxbone.com/#/reference/service-activation/create-addresses/list-already-created-addresses) to check the status of your address, if the status is `VERIFIED` or `VERIFICATION_NOT_REQUIRED`, then [`linkRegulationAddress`](https://developers.voxbone.com/#/reference/service-activation/link-numbers-to-a-local-address-requirement-document-for-activation/link-numbers-to-a-local-address-requirement) can link the DID to the address and unblock the number.
+      - An address can be unlinked from a DID by using the same [`linkRegulationAddress`](https://developers.voxbone.com/#/reference/service-activation/link-numbers-to-a-local-address-requirement-document-for-activation/link-numbers-to-a-local-address-requirement) method, and an unlinked address can be deleted by using [`deleteRegulationAddress`](https://developers.voxbone.com/#/reference/service-activation/reuse-or-delete-addresses-lar-for-number-activation/remove-a-local-address-requirements-document).
 - name: Inventory
   description: List, filter and retrieve information about numbers assigned to your account, or cancel them if needed.
 - name: Voice
@@ -353,19 +381,6 @@ tags:
     After creation, capacity groups can be assigned to numbers by using the Apply Configuration method.
 - name: Connectivity
   description: Retrieve details about Voxbone's data centres and network interconnect for various services such as call termination, speech analytics, etc.
-- name: CDRs
-  description: |
-    __For free early access to our new CDR API and more, [click here](https://www.voxbone.com/lp/reporting/).__
-    
-    #Overview
-    The CDRs module is aimed at letting you download monthly CDR files; it partly replicates what’s available on the web portal. It comprises of 3 methods.
-    
-    CDR files are created when a request is placed through the API. These requested files are created within a time-frame that depends on your monthly traffic (anything from a couple of minutes to several hours). You can list the available CDR files to check whether the requested files have been created and then use the download method to download them. We keep CDR files in our system for up to 30 days.
-    
-    Typical API call flow for generating CDR reports for download includes the following steps:
-      1. Call the requestFileCreation method to make a request for a new CDR file.
-      2. Use the listExistingFiles method to check if your file has been created.
-      3. Download your newly created CDR file using the downloadFile method. The downloaded file will be a compressed .txt.gz file which you can open with a program like 7-zip. The file will contain the same data that you can get on the web portal
 - name: Number Configuration
   description: The Configuration module allows you to apply various configuration settings to the DID’s within your inventory. Please note that you will need to have certain features (eg. VoxOut International) enabled on your account before you are able to apply those settings to your DIDs.
 paths:
@@ -1036,49 +1051,11 @@ paths:
   "/regulation/address":
     x-summary: Create or list addresses
     x-description: | 
-      Create and list Local Address Requirement documents for number activation. You need to provide required information specified in the didGroup with valid information. Once all required information is completed and your Local Address Requirement document is validated, you can proceed with [Linking Numbers](https://docs.voxbone.com/#/reference/service-activation/link-numbers-to-a-local-address-requirement-document-for-activation) to the created address for activation.
+      Create and list Local Address Requirement documents for number activation. You need to provide required information specified in the didGroup with valid information. Once all required information is completed and your Local Address Requirement document is validated, you can proceed with [Linking Numbers](https://developers.voxbone.com/#/reference/service-activation/link-numbers-to-a-local-address-requirement-document-for-activation) to the created address for activation.
       
-      In some cases you will be asked to provide some additional information in order to create an address, in the shape of “extra fields” to be included in the address creation request. 
-      
-      These extra fields are only required for specific countries and number types. The `extraFields` property must be appended to the Local Address Requirement object as a new property and have the field names below as is as the key to the values. For example, a Local Address Requirement object for activation of a `MOBILE` number from `Spain` for a `personal` End User type would be as follows :
-      ```javascript
-      {
-         "customerReference": "Testing - ESP Mobile",
-         "didType": "MOBILE",
-         "firstName": "Testing",
-         "lastName": "Testing",
-         "countryCodeA3": "ESP",
-         "streetName": "Street",
-         "destinationCountryCodeA3": "ESP",
-         "salutation": "MR",
-         "zipCode": "1111",
-         "city": "City",
-         "buildingNumber": "1",
-         "extraFields": {
-            "Nationality":"TEST",
-            "Type of ID":"DNI",
-            "ID Number":"12345678A"
-         }
-      }
-      ```
-      Required extra fields for specific countries and number types is summarised in the table below. For all the rest, the standard address schema needs to be used.
-      
-      ### Additional Information Requirements
-      |Country|Number type|Field name|Accepted values|Description|
-      |:---:|:---:|:---:|:---:|:---|
-      |__Spain__|`MOBILE`|Nationality|`string`, maximum length: 60|The exact format can be chosen freely as long as it allows a human to understand it. We recommend using the full country name but the ISO-3166-1 alpha-3 code is acceptable if it is easier to process by your system.|
-      |__Spain__|`MOBILE`|Type of ID|DNI, NIE, NIF, PASSPORT|Only required for personal addresses (`salutation` is either MR or MS).|
-      |__Spain__|`MOBILE`|ID Number|`string`, maximum length: 60|Only required for personal addresses (`salutation` is either MR or MS), additional validation is performed depending on the type of ID. Here are the validations performed per type of ID: <br><br> __DNI__: 8 digits followed by 1 letter.<br>__NIE__: 1 letter (X,Y or Z), followed by 7 digits, followed by 1 letter.<br>__NIF__: 8 digits followed by 1 letter.<br>PASSPORT: no additional validation.|
-      |__Spain__|`MOBILE`|Fiscal Identification Code|`string`, maximum length: 60|Only required for professional addresses (`salutation` is COMPANY).|
-      |__Denmark__|ALL|Municipality Code|`string`, maximum length: 4|–|
-      |__Denmark__|ALL|Street Code|`string`, maximum length: 4|–|
-      |__Italy__|`GEOGRAPHIC` and `TOLL_FREE`|Signatory date of birth|`string` (yyyy-mm-dd), maximum length: 10|Validation made for age > 18 years|
-      |__Italy__|`GEOGRAPHIC` and `TOLL_FREE`|Signatory place of birth|`string`, maximum length: 60|Both City and country of birth is expected|
-      |__Italy__|`GEOGRAPHIC` and `TOLL_FREE`|Signatory tax code|`string`, maximum length: 60|Mandatory field|
-      |__Italy__|`GEOGRAPHIC` and `TOLL_FREE`|Signatory title|MR or MRS|Mandatory for Company end user only|
-      |__Italy__|`GEOGRAPHIC` and `TOLL_FREE`|Signatory first name|`string`, maximum length: 60|Mandatory for Company end user only|
-      |__Italy__|`GEOGRAPHIC` & `TOLL_FREE`|Signatory last name|`string`, maximum length: 60|Mandatory for Company end user only|
-      |__Italy__|`GEOGRAPHIC` & `TOLL_FREE`|VAT number|`string`, maximum length: 60|Mandatory for Company end user only|
+      In some cases you will be asked to provide some additional information in order to create an address, in the shape of “extra fields” to be included in the address creation request. Addresses may also require a proof of address and/or a proof of identity. Where a proof of identity is required, along with the document you must provide information relating to the identity document proof including the type of document, the id of the document and sometimes the date and issuing authority.
+
+      Please refer to our __[Guide to using our LAR API](https://support.voxbone.com/hc/en-us/articles/4402904174097)__ for more detailed information on when this is required.
     put:
       tags:
       - Service Activation
@@ -1092,109 +1069,128 @@ paths:
         the address elements. The media type to be used is multipart/form-data.
         
         ### Request Body Examples
-        The request body examples below demonstrate how to create an address with both proofs attached in a single request wherever required. You can copy and paste this on the right column while testing in console.
-        
-        Note that `identityDocumentProof` object (which contains details on `nationality`, `identityDocumentType` and `identityDocumentNumber`) only needs to be set when; 
-        - `destinationCountryCodeA3` is `FRA`(France) and `didType` is `GEOGRAPHIC`
-        - `destinationCountryCodeA3` is set as `ZAF` (South Africa) 
-        - `destinationCountryCodeA3` is set as `ITA` (Italy)
-        #### Create an address without any proof document
+        The request body examples below demonstrate how to create an address with both proofs attached in a single request wherever required. You can copy and paste this on the right column while testing in the console/Postman.
+
+        #### Create a Business Address without any proof document
+        Below is an example of a business address where no proof of identity or address is required.
         ```javascript
         --XXX
         Content-ID: createRegulationAddressRequest
         Content-Type: application/json
         
         {
-           "customerReference": "Regression testing - DNK",
-           "didType": "GEOGRAPHIC",
-           "companyName": "Regression Testing",
-           "countryCodeA3": "DNK",
-           "streetName": "Street",
-           "destinationCountryCodeA3": "DNK",
-           "salutation": "COMPANY",
-           "zipCode": "1111",
-           "city": "City",
-           "buildingNumber": "1",
-           "extraFields": {
-               "Municipality Code":"XXXX",
-                "Street Code":"XXXX"
-           }
+           "customerReference":"Voxone - GBR",
+           "didType":"GEOGRAPHIC",
+           "salutation":"COMPANY",
+           "companyName":"Voxbone",
+           "buildingNumber":"42",
+           "streetName":"Folgate Street",
+           "zipCode":"E1 6BT",
+           "city":"London",
+           "countryCodeA3":"GBR",
+           "destinationCountryCodeA3":"GBR"
         }
         --XXX--
         ```
-        #### Create a Business Address with Identitiy and Address proof documents
-        In Italy, a `WORLDWIDE` address is required with proof documents. In this example, we're using a French company and a French National ID for activation. The below request can also be used as reference when creating addresses for service activation in France.
-        ```
+        #### Create a Business Address with Additional Information
+        Below is an example of a business address where no proof of identity or address is required but additional information must be supplied in extra fields.
+        ```javascript        
         --XXX
         Content-ID: createRegulationAddressRequest
         Content-Type: application/json
         
         {
-          "salutation" : "COMPANY",
-          "companyName" : "TEST",
-          "didType" : "GEOGRAPHIC",
-          "destinationCountryCodeA3" : "FRA",
-          "countryCodeA3" : "FRA",
-          "city" : "RENNES",
-          "zipCode" : "35000",
-          "streetName" : "10 Rue de Guebriant",
-          "buildingNumber" : "10",
-          "identityDocumentProof" : {
-            "nationality" : "French",
-            "identityDocumentType" : "NATIONAL_ID_CARD",
-            "identityDocumentNumber" : "123123"
-          }
+           "customerReference":"Voxbone - DNK",
+           "didType":"GEOGRAPHIC",
+           "salutation":"COMPANY",
+           "companyName":"Voxbone",
+           "buildingNumber":"24",
+           "streetName":"Toldbodgade",
+           "zipCode":"1253",
+           "city":"København",
+           "countryCodeA3":"DNK",
+           "destinationCountryCodeA3":"DNK",
+           "extraFields":{
+              "Street Code":"2100",
+              "Municipality Code":"101"
+           }
         }
         --XXX--
-        
+        ```
+        #### Create a Business Address with Address Proof Document
+        Below is an example where an address proof document is required but no proof of identity.
+        ```javascript
+        --XXX
+        Content-ID: createRegulationAddressRequest
+        Content-Type: application/json
+          
+        {
+           "customerReference":"Voxone - GBR",
+           "didType":"GEOGRAPHIC",
+           "salutation":"COMPANY",
+           "companyName":"Voxbone",
+           "buildingNumber":"42",
+           "streetName":"Folgate Street",
+           "zipCode":"E1 6BT",
+           "city":"London",
+           "countryCodeA3":"GBR",
+           "destinationCountryCodeA3":"GBR"
+        }
+        --XXX
+        Content-ID: proofOfAddress
+        Content-Type: application/octet-stream
+        Content-Disposition: filename=Proof_of_address.txt
+            
+        Proof document encoded content
+            
+        --XXX--
+        ```
+        #### Create a Business Address with Proof of Address, Proof of Identity and Identity Document Proof
+        Below is an example where a proof of address document, proof of identity document and identity document proof is required.
+        ```javascript
+        --XXX
+        Content-ID: createRegulationAddressRequest
+        Content-Type: application/json
+            
+        {
+           "customerReference":"Voxbone - FRA",
+           "didType":"GEOGRAPHIC",
+           "salutation":"COMPANY",
+           "companyName":"Voxbone",
+           "buildingNumber":"108",
+           "streetName":"Rue Saint-Lazare",
+           "zipCode":"75008",
+           "city":"Paris",
+           "countryCodeA3":"FRA",
+           "destinationCountryCodeA3":"FRA",
+           "identityDocumentProof":{
+              "nationality":"French",
+              "identityDocumentType":"PASSPORT",
+              "identityDocumentNumber":"3071931"
+           }
+        }
+        --XXX--
+            
         --XXX
         Content-ID: proofOfIdentityDocument
         Content-Type: application/octet-stream
         Content-Transfer-Encoding: binary
-        Content-Disposition: file-data; name="proofOfIdentityDocument"; filename=Proof.pdf
-        
+        Content-Disposition: file-data; name="proofOfIdentityDocument"; filename=passport_scan.pdf
+            
         Identity document proof encoded content
-        
+            
         --XXX--
-        
+            
         --XXX
         Content-ID: proofOfAddress
         Content-Type: application/octet-stream
-        Content-Disposition: filename=Proof.txt
-        
+        Content-Disposition: filename=Proof_of_address.txt
+            
         Proof document encoded content
-        
+            
         --XXX--
         ```
-        #### Create a Business Address with Address proof document
-        Below example is a business address with address proof document attached on creation request for Germany.
-          ```javascript
-          --XXX
-          Content-ID: createRegulationAddressRequest
-          Content-Type: application/json
-          
-          {
-             "customerReference": "address #123",
-             "didType": "GEOGRAPHIC",
-             "companyName": "TEST",
-             "countryCodeA3": "DEU",
-             "streetName": "Regrestreet",
-             "destinationCountryCodeA3": "DEU",
-             "salutation": "COMPANY",
-             "zipCode": "52062",
-             "city": "Aachen",
-             "buildingNumber": "1"
-          }
-          --XXX--
-          
-          Content-ID: proofOfAddress
-          Content-Type: application/octet-stream
-          Content-Disposition: filename=Proof.txt
-          
-          This is a proof
-          
-          --XXX--
-          ```
+        More information is available in our __[Guide to using our LAR API](https://support.voxbone.com/hc/en-us/articles/4402904174097)__.
       operationId: createRegulationAddress
       consumes:
       - multipart/form-data
@@ -1221,7 +1217,7 @@ paths:
       tags:
       - Service Activation
       summary: List already created addresses
-      description: ''
+      description: Allows you to view addresses already created and their current status. You can use these addresses to link to DIDs to satisfy LAR requirements.
       operationId: listRegulationAddress
       produces:
       - text/xml
@@ -2861,110 +2857,6 @@ paths:
           description: successful operation
           schema:
             "$ref": "#/definitions/ListPopResponse"
-  /cdrs/cdrsfile/request/{year}/{month}:
-    x-summary : Request CDRs by timeframe
-    x-description: Sends a request to generate a report with all the cdrs for the given
-        month and year. Note that it is only possible to request the generation of
-        a report for a month set in the past.
-    post:
-      tags:
-      - CDRs
-      summary: 'Request CDRs from certain month'
-      produces:
-      - text/xml
-      - application/json
-      parameters:
-      - name: month
-        in: path
-        description: The desired month for the report generation.
-        required: true
-        type: string
-        x-example: "8"
-      - name: year
-        in: path
-        description: The desired year for the report generation.
-        required: true
-        type: string
-        x-example: "2018"
-      responses:
-        '200':
-          description: successful operation
-          schema:
-            "$ref": "#/definitions/RequestFileCreationResponse"
-  /cdrs/cdrsfile/request:
-    x-summary : Request CDRs by direction
-    x-description: Sends a request to generate a report with all the cdrs for the given
-        month and year. Note that it is only possible to request the generation of
-        a report for a month set in the past. Use __type__ parameter if you want to get only inbound or outbound calls.
-    post:
-      tags:
-      - CDRs
-      summary: 'Request CDRs by direction'
-      operationId: requestFileCreation
-      consumes:
-      - application/json
-      - text/xml
-      produces:
-      - text/xml
-      - application/json
-      parameters:
-      - in: body
-        name: body
-        required: false
-        schema:
-          "$ref": "#/definitions/RequestFileCreationRequest"
-          example: |
-            {
-              "month":"8",
-              "year":"2018",
-              "type":"IN"
-            }
-      responses:
-        '200':
-          description: successful operation
-          schema:
-            "$ref": "#/definitions/RequestFileCreationResponse" 
-  "/cdrs/cdrsfile":
-    x-summary : List CDR files
-    x-description: The listExistingFile method allows you to list all the files that are
-        available for download. You should use that method to get the name of the
-        file before you can use the downloadFile method which requires the file name
-        as an input parameter.
-    get:
-      tags:
-      - CDRs
-      summary: 'List generated CDR files'
-      operationId: listExistingFiles
-      produces:
-      - text/xml
-      - application/json
-      parameters: []
-      responses:
-        '200':
-          description: successful operation
-          schema:
-            "$ref": "#/definitions/ListExistingFilesResponse"
-  "/cdrs/cdrsfile/{fileName}":
-    x-summary : Download specific CDR file
-    x-description: Downloads the requested cdrs archive file with the given name.
-    get:
-      tags:
-      - CDRs
-      summary: Download file by name
-      description: ''
-      operationId: downloadFile
-      produces:
-      - application/octet-stream
-      parameters:
-      - name: fileName
-        in: path
-        description: This is one of the fileNames returned by the listExistingFiles
-          method.
-        required: true
-        type: string
-      responses:
-        default:
-          description: successful operation
 definitions:
   RequestFileCreationResponse:
     type: object
@@ -2996,17 +2888,6 @@ definitions:
         enum:
         - IN
         - OUT
-  ListExistingFilesResponse:
-    type: object
-    properties:
-      fileNames:
-        type: array
-        description: The list of files that are available for download. Note that
-          in the sandbox environment, you need to manually go to the sandbox portal
-          in the CDR tab where you need to fulfil the file creation request (it simulates
-          the file processing)
-        items:
-          type: string
   CapacityGroupModel:
     type: object
     properties:
@@ -3365,6 +3246,7 @@ definitions:
           - WEB_RTC
           - VOXOUT_INTERNATIONAL
           - VOXOUT_NATIONAL
+          - PEER
       status:
         type: string
         description: PARTIAL, FAILURE, SUCCESS.
@@ -3476,6 +3358,7 @@ definitions:
     - WEB_RTC
     - VOXOUT_INTERNATIONAL
     - VOXOUT_NATIONAL
+    - PEER
   CallerId:
     type: object
     properties:
